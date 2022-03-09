@@ -1,4 +1,5 @@
-com_sri_yices_Yices.h
+com_berkeley_abc_Abc.h
 *.o
 *.so
 *.dylib
+*.class

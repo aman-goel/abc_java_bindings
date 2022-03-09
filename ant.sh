@@ -3,7 +3,7 @@
 #uses the build.sh to mimic what 'ant install' does without 'ant'
 REPO_ROOT=${PWD}
 
-AP=${REPO_ROOT}/../abc
+AP=${REPO_ROOT}/../../abc
 AC=${REPO_ROOT}/build/classes
 AI=${REPO_ROOT}/dist/lib
 
