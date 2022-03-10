@@ -73,6 +73,29 @@ public final class Abc {
     public static native long Abc_ObjChild0( long pObj );
     public static native long Abc_ObjChild1( long pObj );
 
+    public static native long Fraig_ManCreate();
+    public static native void Fraig_ManFree( long fAig );
+
+    public static native long Fraig_ManReadConst1( long fAig );
+    public static native long Fraig_ManReadIthVar( long fAig, int i );
+    public static native long Fraig_NodeAnd( long fAig, long fObjA, long fObjB );
+    public static native long Fraig_NodeOr( long fAig, long fObjA, long fObjB );
+    public static native long Fraig_Not( long fObj );
+
+    public static native int Fraig_ManReadInputNum( long fAig );
+
+    public static native long Fraig_Regular( long fObj );
+    public static native int Fraig_NodeReadNum( long fObj );
+
+    public static native boolean Fraig_NodeIsVar( long fObj );
+    public static native boolean Fraig_IsComplement( long fObj );
+    public static native boolean Fraig_NodeIsConst( long fObj );
+
+    public static native long Fraig_NodeReadOne( long fObj );
+    public static native long Fraig_NodeReadTwo( long fObj );
+
+    public static native void Fraig_ManPrintStats( long fAig );
+
     public static void main(String[] args){
         System.err.println("Abc ready? " + isReady());
         System.err.println("Abc Java Bindings Version " + versionString);

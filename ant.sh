@@ -24,4 +24,5 @@ java -Djava.library.path=. -jar abc.jar
 cd ${REPO_ROOT}
 
 cp dist/lib/libabc2java.* ~/Library/Java/Extensions/
+cp dist/lib/libabc2java.* ~/work/ws/eclipse/P/Src/PRuntimes/PSymbolicRuntime/lib/
 cp dist/lib/abc.jar ~/work/ws/eclipse/P/Src/PRuntimes/PSymbolicRuntime/lib/

@@ -6,6 +6,7 @@
 
 #include "com_berkeley_abc_Abc.h"
 #include "base/main/main.h"
+#include "proof/fraig/fraig.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -62,6 +63,9 @@ static jstring convertToString(JNIEnv *env, const char *s) {
   return b;
 }
 
+//////////////////////////////////////
+// AIG
+//////////////////////////////////////
 
 /*
  * GLOBAL INITIALIZATION/EXIT/RESET
@@ -75,7 +79,6 @@ JNIEXPORT void JNICALL Java_com_berkeley_abc_Abc_Abc_1Stop
   (JNIEnv *env, jclass) {
     Abc_Stop();
 }
-
 
 /*
  * NETWORK INITIALIZATION/EXIT/RESET
@@ -100,7 +103,6 @@ JNIEXPORT void JNICALL Java_com_berkeley_abc_Abc_Abc_1NtkDelete
          out_of_mem_exception(env);
     }
 }
-
 
 /*
  * CREATE/CONNECT AIG NODES
@@ -215,7 +217,6 @@ JNIEXPORT void JNICALL Java_com_berkeley_abc_Abc_Abc_1ObjAddFanin
     }
 }
 
-
 /*
  * NETWORK UTILITIES
  */
@@ -305,7 +306,6 @@ JNIEXPORT jstring JNICALL Java_com_berkeley_abc_Abc_Abc_1ObjName
     }
     return result;
 }
-
 
 JNIEXPORT void JNICALL Java_com_berkeley_abc_Abc_Abc_1AigCleanup
   (JNIEnv *env, jclass, jlong pAig) {
@@ -434,6 +434,202 @@ JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Abc_1ObjChild1
          out_of_mem_exception(env);
     }
     return result;
+}
+
+
+//////////////////////////////////////
+// FRAIG
+//////////////////////////////////////
+
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Fraig_1ManCreate
+  (JNIEnv *env, jclass) {
+    jlong result = 0;
+
+    try {
+        result = reinterpret_cast<jlong>(Fraig_ManCreate( NULL ));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+JNIEXPORT void JNICALL Java_com_berkeley_abc_Abc_Fraig_1ManFree
+  (JNIEnv *env, jclass, jlong fAig) {
+    try {
+        Fraig_ManFree( reinterpret_cast<Fraig_Man_t *>(fAig));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+}
+
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Fraig_1ManReadConst1
+  (JNIEnv *env, jclass, jlong fAig) {
+    jlong result = 0;
+
+    try {
+        result = reinterpret_cast<jlong>(Fraig_ManReadConst1( reinterpret_cast<Fraig_Man_t *>(fAig) ));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Fraig_1ManReadIthVar
+  (JNIEnv *env, jclass, jlong fAig, jint i) {
+    jlong result = 0;
+
+    try {
+        result = reinterpret_cast<jlong>(Fraig_ManReadIthVar( reinterpret_cast<Fraig_Man_t *>(fAig),
+                                                              reinterpret_cast<int>(i) ));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Fraig_1NodeAnd
+  (JNIEnv *env, jclass, jlong fAig, jlong fObjA, jlong fObjB) {
+    jlong result = 0;
+
+    try {
+        result = reinterpret_cast<jlong>(Fraig_NodeAnd( reinterpret_cast<Fraig_Man_t *>(fAig),
+                                                        reinterpret_cast<Fraig_Node_t *>(fObjA),
+                                                        reinterpret_cast<Fraig_Node_t *>(fObjB) ));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Fraig_1NodeOr
+  (JNIEnv *env, jclass, jlong fAig, jlong fObjA, jlong fObjB) {
+    jlong result = 0;
+
+    try {
+        result = reinterpret_cast<jlong>(Fraig_NodeOr( reinterpret_cast<Fraig_Man_t *>(fAig),
+                                                        reinterpret_cast<Fraig_Node_t *>(fObjA),
+                                                        reinterpret_cast<Fraig_Node_t *>(fObjB) ));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Fraig_1Not
+  (JNIEnv *env, jclass, jlong fObj) {
+    jlong result = 0;
+
+    try {
+        result = reinterpret_cast<jlong>(Fraig_Not( reinterpret_cast<Fraig_Node_t *>(fObj) ));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+JNIEXPORT jint JNICALL Java_com_berkeley_abc_Abc_Fraig_1ManReadInputNum
+  (JNIEnv *env, jclass, jlong fAig) {
+    jint result = 0;
+
+    try {
+        result = reinterpret_cast<jint>(Fraig_ManReadInputNum( reinterpret_cast<Fraig_Man_t *>(fAig) ));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Fraig_1Regular
+  (JNIEnv *env, jclass, jlong fObj) {
+    jlong result = 0;
+
+    try {
+        result = reinterpret_cast<jlong>(Fraig_Regular( reinterpret_cast<Fraig_Node_t *>(fObj) ));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+JNIEXPORT jint JNICALL Java_com_berkeley_abc_Abc_Fraig_1NodeReadNum
+  (JNIEnv *env, jclass, jlong fObj) {
+    int32_t result = 0;
+
+    try {
+        result = Fraig_NodeReadNum( reinterpret_cast<Fraig_Node_t *>(fObj) );
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return (jint)result;
+}
+
+JNIEXPORT jboolean JNICALL Java_com_berkeley_abc_Abc_Fraig_1NodeIsVar
+  (JNIEnv *env, jclass, jlong fObj) {
+    int32_t result;
+
+    try {
+        result = Fraig_NodeIsVar( reinterpret_cast<Fraig_Node_t *>(fObj) );
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return (jboolean)result;
+}
+
+JNIEXPORT jboolean JNICALL Java_com_berkeley_abc_Abc_Fraig_1IsComplement
+  (JNIEnv *env, jclass, jlong fObj) {
+    int32_t result;
+
+    try {
+        result = Fraig_IsComplement( reinterpret_cast<Fraig_Node_t *>(fObj) );
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return (jboolean)result;
+}
+
+JNIEXPORT jboolean JNICALL Java_com_berkeley_abc_Abc_Fraig_1NodeIsConst
+  (JNIEnv *env, jclass, jlong fObj) {
+    int32_t result;
+
+    try {
+        result = Fraig_NodeIsConst( reinterpret_cast<Fraig_Node_t *>(fObj) );
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return (jboolean)result;
+}
+
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Fraig_1NodeReadOne
+  (JNIEnv *env, jclass, jlong fObj) {
+    jlong result = 0;
+
+    try {
+        result = reinterpret_cast<jlong>(Fraig_NodeReadOne( reinterpret_cast<Fraig_Node_t *>(fObj) ));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Fraig_1NodeReadTwo
+  (JNIEnv *env, jclass, jlong fObj) {
+    jlong result = 0;
+
+    try {
+        result = reinterpret_cast<jlong>(Fraig_NodeReadTwo( reinterpret_cast<Fraig_Node_t *>(fObj) ));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+JNIEXPORT void JNICALL Java_com_berkeley_abc_Abc_Fraig_1ManPrintStats
+  (JNIEnv *env, jclass, jlong fAig) {
+    try {
+        Fraig_ManPrintStats( reinterpret_cast<Fraig_Man_t *>(fAig));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
 }
 
 
