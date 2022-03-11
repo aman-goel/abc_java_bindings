@@ -73,7 +73,7 @@ public final class Abc {
     public static native long Abc_ObjChild0( long pObj );
     public static native long Abc_ObjChild1( long pObj );
 
-    public static native long Fraig_ManCreate();
+    public static native long Fraig_ManCreate( long fParams );
     public static native void Fraig_ManFree( long fAig );
 
     public static native long Fraig_ManReadConst1( long fAig );
@@ -95,6 +95,29 @@ public final class Abc {
     public static native long Fraig_NodeReadTwo( long fObj );
 
     public static native void Fraig_ManPrintStats( long fAig );
+    public static native boolean Fraig_NodesAreEqual( long fAig, long fObjA, long fObjB, int nBTLimit, int nTimeLimit );
+
+    public static native boolean Fraig_ManCheckClauseUsingSimInfo( long fAig, long fObjA, long fObjB );
+    public static native int Fraig_ManCheckClauseUsingSat( long fAig, long fObjA, long fObjB, int nBTLimit );
+
+    public static native long Fraig_ParamsGetDefault();
+
+    public static native void Fraig_ParamsSet_nPatsRand( long fParams, int n );
+    public static native void Fraig_ParamsSet_nPatsDyna( long fParams, int n );
+    public static native void Fraig_ParamsSet_nBTLimit( long fParams, int n );
+    public static native void Fraig_ParamsSet_nSeconds( long fParams, int n );
+    public static native void Fraig_ParamsSet_fFuncRed( long fParams, int n );
+    public static native void Fraig_ParamsSet_fFeedBack( long fParams, int n );
+    public static native void Fraig_ParamsSet_fDist1Pats( long fParams, int n );
+    public static native void Fraig_ParamsSet_fDoSparse( long fParams, int n );
+    public static native void Fraig_ParamsSet_fChoicing( long fParams, int n );
+    public static native void Fraig_ParamsSet_fTryProve( long fParams, int n );
+    public static native void Fraig_ParamsSet_fVerbose( long fParams, int n );
+    public static native void Fraig_ParamsSet_fVerboseP( long fParams, int n );
+    public static native void Fraig_ParamsSet_fInternal( long fParams, int n );
+    public static native void Fraig_ParamsSet_nConfLimit( long fParams, int n );
+    public static native void Fraig_ParamsSet_nInspLimit( long fParams, int n );
+
 
     public static void main(String[] args){
         System.err.println("Abc ready? " + isReady());
