@@ -31,26 +31,31 @@ public final class Abc {
     public static final String versionString = "1.0.0";
     public static final String buildDate = "March 7 2022";
 
+
+    // Abc Network
     public static native void Abc_Start();
     public static native void Abc_Stop();
 
     public static native long Abc_NtkAlloc();
     public static native void Abc_NtkDelete( long pAig );
+    public static native boolean Abc_NtkCheck( long pAig );
 
-    public static native long Abc_AigConst1( long pAig );
     public static native long Abc_NtkCreateNodeConst0( long pAig );
     public static native long Abc_NtkCreateNodeConst1( long pAig );
 
     public static native long Abc_NtkCreatePi( long pAig );
     public static native long Abc_NtkCreatePo( long pAig );
 
+    public static native int Abc_NtkPiNum( long pAig );
+    public static native int Abc_NtkPoNum( long pAig );
+
+
+    // Aig
+    public static native long Abc_AigConst1( long pAig );
     public static native long Abc_AigAnd( long pAig, long pObjA, long pObjB );
     public static native long Abc_AigOr( long pAig, long pObjA, long pObjB );
     public static native long Abc_ObjNot( long pObj );
     public static native void Abc_ObjAddFanin( long pObjO, long pObjI );
-
-    public static native int Abc_NtkPiNum( long pAig );
-    public static native int Abc_NtkPoNum( long pAig );
 
     public static native void Abc_AigPrintNode( long pObj );
     public static native long Abc_ObjRegular( long pObj );
@@ -59,7 +64,6 @@ public final class Abc {
     public static native String Abc_ObjName( long pObj );
 
     public static native void Abc_AigCleanup( long pAig );
-    public static native boolean Abc_NtkCheck( long pAig );
 
     public static native boolean Abc_ObjIsCi( long pObj );
     public static native boolean Abc_ObjIsComplement( long pObj );
@@ -73,6 +77,8 @@ public final class Abc {
     public static native long Abc_ObjChild0( long pObj );
     public static native long Abc_ObjChild1( long pObj );
 
+
+    // Fraig
     public static native long Fraig_ManCreate( long fParams );
     public static native void Fraig_ManFree( long fAig );
 
@@ -118,6 +124,34 @@ public final class Abc {
     public static native void Fraig_ParamsSet_nConfLimit( long fParams, int n );
     public static native void Fraig_ParamsSet_nInspLimit( long fParams, int n );
 
+
+    // Ivy Aig
+    public static native long Ivy_ManStart();
+    public static native void Ivy_ManStop( long fAig );
+
+    public static native long Ivy_ManConst1( long fAig );
+    public static native long Ivy_ObjCreatePi( long fAig );
+    public static native long Ivy_And( long fAig, long fObjA, long fObjB );
+    public static native long Ivy_Or( long fAig, long fObjA, long fObjB );
+    public static native long Ivy_Not( long fObj );
+
+    public static native int Ivy_ManPiNum( long fAig );
+
+    public static native long Ivy_Regular( long fObj );
+    public static native int Ivy_ObjId( long fObj );
+
+    public static native boolean Ivy_ObjIsPi( long fObj );
+    public static native boolean Ivy_IsComplement( long fObj );
+    public static native boolean Ivy_ObjIsConst1( long fObj );
+
+    public static native long Ivy_ObjChild0( long fObj );
+    public static native long Ivy_ObjChild1( long fObj );
+
+    public static native void Ivy_ManPrintStats( long fAig );
+
+    public static native long Ivy_FraigParamsDefault();
+    public static native long Ivy_FraigPerform( long fAig, long fParams );
+    public static native long Ivy_ObjEquiv( long fObj );
 
     public static void main(String[] args){
         System.err.println("Abc ready? " + isReady());

@@ -8,12 +8,14 @@
 #include "base/main/main.h"
 #include "proof/fraig/fraig.h"
 #include "proof/fraig/fraigInt.h"
+#include "aig/ivy/ivy.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 Fraig_Params_t Params;
+Ivy_FraigParams_t iParams;
 
 /*
  * Out-of-memory handler: throws a C++ exception
@@ -840,6 +842,335 @@ JNIEXPORT void JNICALL Java_com_berkeley_abc_Abc_Fraig_1ParamsSet_1nInspLimit
     } catch (std::bad_alloc &ba) {
          out_of_mem_exception(env);
     }
+}
+
+
+//////////////////////////////////////
+// IVYAIG
+//////////////////////////////////////
+
+/*
+ * Class:     com_berkeley_abc_Abc
+ * Method:    Ivy_ManStart
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Ivy_1ManStart
+  (JNIEnv *env, jclass) {
+    jlong result = 0;
+
+    try {
+        result = reinterpret_cast<jlong>(Ivy_ManStart());
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+/*
+ * Class:     com_berkeley_abc_Abc
+ * Method:    Ivy_ManStop
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_com_berkeley_abc_Abc_Ivy_1ManStop
+  (JNIEnv *env, jclass, jlong fAig) {
+    try {
+        Ivy_ManStop( reinterpret_cast<Ivy_Man_t *>(fAig));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+}
+
+/*
+ * Class:     com_berkeley_abc_Abc
+ * Method:    Ivy_ManConst1
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Ivy_1ManConst1
+  (JNIEnv *env, jclass, jlong fAig) {
+    jlong result = 0;
+
+    try {
+        result = reinterpret_cast<jlong>(Ivy_ManConst1( reinterpret_cast<Ivy_Man_t *>(fAig) ));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+/*
+ * Class:     com_berkeley_abc_Abc
+ * Method:    Ivy_ObjCreatePi
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Ivy_1ObjCreatePi
+  (JNIEnv *env, jclass, jlong fAig) {
+    jlong result = 0;
+
+    try {
+        result = reinterpret_cast<jlong>(Ivy_ObjCreatePi( reinterpret_cast<Ivy_Man_t *>(fAig) ));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+/*
+ * Class:     com_berkeley_abc_Abc
+ * Method:    Ivy_And
+ * Signature: (JJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Ivy_1And
+  (JNIEnv *env, jclass, jlong fAig, jlong fObjA, jlong fObjB) {
+    jlong result = 0;
+
+    try {
+        result = reinterpret_cast<jlong>(Ivy_And( reinterpret_cast<Ivy_Man_t *>(fAig),
+                                                  reinterpret_cast<Ivy_Obj_t *>(fObjA),
+                                                  reinterpret_cast<Ivy_Obj_t *>(fObjB) ));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+/*
+ * Class:     com_berkeley_abc_Abc
+ * Method:    Ivy_Or
+ * Signature: (JJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Ivy_1Or
+  (JNIEnv *env, jclass, jlong fAig, jlong fObjA, jlong fObjB) {
+    jlong result = 0;
+
+    try {
+        result = reinterpret_cast<jlong>(Ivy_Or( reinterpret_cast<Ivy_Man_t *>(fAig),
+                                                 reinterpret_cast<Ivy_Obj_t *>(fObjA),
+                                                 reinterpret_cast<Ivy_Obj_t *>(fObjB) ));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+/*
+ * Class:     com_berkeley_abc_Abc
+ * Method:    Ivy_Not
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Ivy_1Not
+  (JNIEnv *env, jclass, jlong fObj) {
+    jlong result = 0;
+
+    try {
+        result = reinterpret_cast<jlong>(Ivy_Not( reinterpret_cast<Ivy_Obj_t *>(fObj) ));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+/*
+ * Class:     com_berkeley_abc_Abc
+ * Method:    Ivy_ManPiNum
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_berkeley_abc_Abc_Ivy_1ManPiNum
+  (JNIEnv *env, jclass, jlong fAig) {
+    jint result = 0;
+
+    try {
+        result = reinterpret_cast<jint>(Ivy_ManPiNum( reinterpret_cast<Ivy_Man_t *>(fAig) ));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+/*
+ * Class:     com_berkeley_abc_Abc
+ * Method:    Ivy_Regular
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Ivy_1Regular
+  (JNIEnv *env, jclass, jlong fObj) {
+    jlong result = 0;
+
+    try {
+        result = reinterpret_cast<jlong>(Ivy_Regular( reinterpret_cast<Ivy_Obj_t *>(fObj) ));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+/*
+ * Class:     com_berkeley_abc_Abc
+ * Method:    Ivy_ObjId
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_berkeley_abc_Abc_Ivy_1ObjId
+  (JNIEnv *env, jclass, jlong fObj) {
+    int32_t result = 0;
+
+    try {
+        result = Ivy_ObjId( reinterpret_cast<Ivy_Obj_t *>(fObj) );
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return (jint)result;
+}
+
+/*
+ * Class:     com_berkeley_abc_Abc
+ * Method:    Ivy_ObjIsPi
+ * Signature: (J)Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_berkeley_abc_Abc_Ivy_1ObjIsPi
+  (JNIEnv *env, jclass, jlong fObj) {
+    int32_t result;
+
+    try {
+        result = Ivy_ObjIsPi( reinterpret_cast<Ivy_Obj_t *>(fObj) );
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return (jboolean)result;
+}
+
+/*
+ * Class:     com_berkeley_abc_Abc
+ * Method:    Ivy_IsComplement
+ * Signature: (J)Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_berkeley_abc_Abc_Ivy_1IsComplement
+  (JNIEnv *env, jclass, jlong fObj) {
+    int32_t result;
+
+    try {
+        result = Ivy_IsComplement( reinterpret_cast<Ivy_Obj_t *>(fObj) );
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return (jboolean)result;
+}
+
+/*
+ * Class:     com_berkeley_abc_Abc
+ * Method:    Ivy_ObjIsConst1
+ * Signature: (J)Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_berkeley_abc_Abc_Ivy_1ObjIsConst1
+  (JNIEnv *env, jclass, jlong fObj) {
+    int32_t result;
+
+    try {
+        result = Ivy_ObjIsConst1( reinterpret_cast<Ivy_Obj_t *>(fObj) );
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return (jboolean)result;
+}
+
+/*
+ * Class:     com_berkeley_abc_Abc
+ * Method:    Ivy_ObjChild0
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Ivy_1ObjChild0
+  (JNIEnv *env, jclass, jlong fObj) {
+    jlong result = 0;
+
+    try {
+        result = reinterpret_cast<jlong>(Ivy_ObjChild0( reinterpret_cast<Ivy_Obj_t *>(fObj) ));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+/*
+ * Class:     com_berkeley_abc_Abc
+ * Method:    Ivy_ObjChild1
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Ivy_1ObjChild1
+  (JNIEnv *env, jclass, jlong fObj) {
+    jlong result = 0;
+
+    try {
+        result = reinterpret_cast<jlong>(Ivy_ObjChild1( reinterpret_cast<Ivy_Obj_t *>(fObj) ));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+/*
+ * Class:     com_berkeley_abc_Abc
+ * Method:    Ivy_ManPrintStats
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_com_berkeley_abc_Abc_Ivy_1ManPrintStats
+  (JNIEnv *env, jclass, jlong fAig) {
+    try {
+        Ivy_ManPrintStats( reinterpret_cast<Ivy_Man_t *>(fAig) );
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+}
+
+
+/*
+ * Class:     com_berkeley_abc_Abc
+ * Method:    Ivy_FraigParamsDefault
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Ivy_1FraigParamsDefault
+  (JNIEnv *env, jclass) {
+    jlong result = 0;
+
+    try {
+        Ivy_FraigParamsDefault( &iParams );
+        result = reinterpret_cast<jlong>( &iParams );
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+/*
+ * Class:     com_berkeley_abc_Abc
+ * Method:    Ivy_FraigPerform
+ * Signature: (JJ)J
+ */
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Ivy_1FraigPerform
+  (JNIEnv *env, jclass, jlong fAig, jlong fParams) {
+    jlong result = 0;
+
+    try {
+        result = reinterpret_cast<jlong>(Ivy_FraigPerform( reinterpret_cast<Ivy_Man_t *>(fAig),
+                                                           reinterpret_cast<Ivy_FraigParams_t *>(fParams) ));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
+
+/*
+ * Class:     com_berkeley_abc_Abc
+ * Method:    Ivy_ObjEquiv
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Ivy_1ObjEquiv
+  (JNIEnv *env, jclass, jlong fObj) {
+    jlong result = 0;
+
+    try {
+        result = reinterpret_cast<jlong>(Ivy_ObjEquiv( reinterpret_cast<Ivy_Obj_t *>(fObj) ));
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
 }
 
 
