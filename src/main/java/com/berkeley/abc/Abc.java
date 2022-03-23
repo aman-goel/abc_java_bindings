@@ -153,6 +153,8 @@ public final class Abc {
     public static native long Ivy_FraigPerform( long fAig, long fParams );
     public static native long Ivy_ObjEquiv( long fObj );
 
+    public static native boolean Ivy_ManCheck( long fAig );
+
     public static void main(String[] args){
         System.err.println("Abc ready? " + isReady());
         System.err.println("Abc Java Bindings Version " + versionString);

@@ -54,6 +54,28 @@ static void out_of_mem_exception(JNIEnv *env) {
 
 
 /*
+ * Code that throws the Java exception
+ */
+static void standard_exception(JNIEnv *env) {
+  jclass e;
+  jint code;
+
+  code = 0;
+
+  if (e != NULL) {
+    code = env->ThrowNew(e, "Standard error in ABC JNI.");
+  }
+  if (e == NULL || code < 0) {
+    // Something went  badly wrong.
+    // We check whether an exception is pending. If not we report a fatal error
+    if (! env->ExceptionCheck()) {
+      env->FatalError("Unknown error in ABC JNI.\nFailed to throw an exception\n");
+    }
+  }
+}
+
+
+/*
  * Convert a string (s may be NULL);
  */
 static jstring convertToString(JNIEnv *env, const char *s) {
@@ -1016,6 +1038,8 @@ JNIEXPORT jint JNICALL Java_com_berkeley_abc_Abc_Ivy_1ObjId
         result = Ivy_ObjId( reinterpret_cast<Ivy_Obj_t *>(fObj) );
     } catch (std::bad_alloc &ba) {
          out_of_mem_exception(env);
+    } catch (std::exception &e) {
+        standard_exception(env);
     }
     return (jint)result;
 }
@@ -1067,6 +1091,8 @@ JNIEXPORT jboolean JNICALL Java_com_berkeley_abc_Abc_Ivy_1ObjIsConst1
         result = Ivy_ObjIsConst1( reinterpret_cast<Ivy_Obj_t *>(fObj) );
     } catch (std::bad_alloc &ba) {
          out_of_mem_exception(env);
+    } catch (std::exception &e) {
+        standard_exception(env);
     }
     return (jboolean)result;
 }
@@ -1171,6 +1197,23 @@ JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Ivy_1ObjEquiv
          out_of_mem_exception(env);
     }
     return result;
+}
+
+/*
+ * Class:     com_berkeley_abc_Abc
+ * Method:    Ivy_ManCheck
+ * Signature: (J)Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_berkeley_abc_Abc_Ivy_1ManCheck
+  (JNIEnv *env, jclass, jlong fAig) {
+    int32_t result;
+
+    try {
+        result = Ivy_ManCheck( reinterpret_cast<Ivy_Man_t *>(fAig) );
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return (jboolean)result;
 }
 
 
