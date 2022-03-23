@@ -1038,8 +1038,6 @@ JNIEXPORT jint JNICALL Java_com_berkeley_abc_Abc_Ivy_1ObjId
         result = Ivy_ObjId( reinterpret_cast<Ivy_Obj_t *>(fObj) );
     } catch (std::bad_alloc &ba) {
          out_of_mem_exception(env);
-    } catch (std::exception &e) {
-        standard_exception(env);
     }
     return (jint)result;
 }
@@ -1091,8 +1089,6 @@ JNIEXPORT jboolean JNICALL Java_com_berkeley_abc_Abc_Ivy_1ObjIsConst1
         result = Ivy_ObjIsConst1( reinterpret_cast<Ivy_Obj_t *>(fObj) );
     } catch (std::bad_alloc &ba) {
          out_of_mem_exception(env);
-    } catch (std::exception &e) {
-        standard_exception(env);
     }
     return (jboolean)result;
 }
