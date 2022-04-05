@@ -730,6 +730,18 @@ JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Fraig_1ParamsGetDefault
     return result;
 }
 
+JNIEXPORT jlong JNICALL Java_com_berkeley_abc_Abc_Fraig_1ParamsGetDefaultFull
+  (JNIEnv *env, jclass) {
+    jlong result = 0;
+
+    try {
+        Fraig_ParamsSetDefaultFull( &Params );
+        result = reinterpret_cast<jlong>( &Params );
+    } catch (std::bad_alloc &ba) {
+         out_of_mem_exception(env);
+    }
+    return result;
+}
 
 JNIEXPORT void JNICALL Java_com_berkeley_abc_Abc_Fraig_1ParamsSet_1nPatsRand
   (JNIEnv *env, jclass, jlong fParams, jint n) {

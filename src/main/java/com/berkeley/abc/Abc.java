@@ -107,6 +107,7 @@ public final class Abc {
     public static native int Fraig_ManCheckClauseUsingSat( long fAig, long fObjA, long fObjB, int nBTLimit );
 
     public static native long Fraig_ParamsGetDefault();
+    public static native long Fraig_ParamsGetDefaultFull();
 
     public static native void Fraig_ParamsSet_nPatsRand( long fParams, int n );
     public static native void Fraig_ParamsSet_nPatsDyna( long fParams, int n );
